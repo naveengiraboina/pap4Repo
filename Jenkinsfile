@@ -10,7 +10,7 @@ stage 'test'
 parallel 'integration': { 
      node ('Slave1') {
           unstash 'source'
-          withEnv(["PATH+MAVEN=${tool 'Maven3'}/bin"]) {
+          withEnv(["PATH+MAVEN=${tool 'Maven3.3'}/bin"]) {
                sh "mvn clean package"
           }
 		  //
@@ -18,7 +18,7 @@ parallel 'integration': {
 }, 'quality': {
      node ('Slave1') {
           unstash 'source'
-          withEnv(["PATH+MAVEN=${tool 'Maven3'}/bin"]) {
+          withEnv(["PATH+MAVEN=${tool 'Maven3.3'}/bin"]) {
                sh "mvn clean package" //sonar:sonar
           }
      }
@@ -30,7 +30,7 @@ timeout(time: 7, unit: 'DAYS') {
 stage name:'deploy', concurrency: 1
 node ('Slave1') {
      unstash 'source'
-     withEnv(["PATH+MAVEN=${tool 'Maven3'}/bin"]) {
+     withEnv(["PATH+MAVEN=${tool 'Maven3.3'}/bin"]) {
           sh "mvn clean package"
      }
 	 archiveArtifacts '**/*.jar'
